@@ -5,6 +5,7 @@ function Hero() {
   const roles = [
     "Java Developer",
     "AI/ML Enthusiast",
+    "Generative AI Enthusiast",
     "Problem Solver",
   ];
 
@@ -18,22 +19,14 @@ function Hero() {
     const timeout = setTimeout(
       () => {
         if (!deleting) {
-          // Typing
-          setText(
-            currentRole.substring(0, text.length + 1)
-          );
+          setText(currentRole.substring(0, text.length + 1));
 
-          // Word complete hone ke baad delete start
           if (text === currentRole) {
             setDeleting(true);
           }
         } else {
-          // Deleting
-          setText(
-            currentRole.substring(0, text.length - 1)
-          );
+          setText(currentRole.substring(0, text.length - 1));
 
-          // Next role
           if (text === "") {
             setDeleting(false);
 
@@ -44,7 +37,6 @@ function Hero() {
           }
         }
       },
-
       deleting
         ? 60
         : text === currentRole
@@ -53,14 +45,12 @@ function Hero() {
     );
 
     return () => clearTimeout(timeout);
-
   }, [text, deleting, roleIndex]);
 
+  const resumeUrl = `${import.meta.env.BASE_URL}resume.pdf`;
 
   return (
     <section id="home" className="hero">
-
-      {/* ================= LEFT SIDE ================= */}
 
       <div className="hero-content">
 
@@ -68,41 +58,26 @@ function Hero() {
           Hello, I'm
         </p>
 
-
         <h1 className="hero-animation-2">
           Ayush Kumar Verma
         </h1>
 
-
-        {/* TYPING ANIMATION */}
-
         <h2 className="hero-animation-3">
-
           I'm a{" "}
 
           <span className="typing-text">
             {text}
           </span>
 
-          <span className="cursor">
-            |
-          </span>
-
+          <span className="cursor">|</span>
         </h2>
 
-
-        {/* DESCRIPTION */}
-
         <p className="hero-description hero-animation-4">
-
-          MCA student specializing in Artificial Intelligence
-          and Machine Learning. I enjoy building applications
-          and solving real-world problems using technology.
-
+          MCA (AI & ML) student with a strong foundation in
+          software development, machine learning and Generative AI.
+          Currently building LeanAI, an LLM context and token
+          optimization system.
         </p>
-
-
-        {/* ================= BUTTONS ================= */}
 
         <div className="hero-buttons hero-animation-5">
 
@@ -113,45 +88,43 @@ function Hero() {
             View Projects
           </a>
 
-
           <a
-            href="/resume.pdf"
+            href={resumeUrl}
             className="secondary-btn"
-            download
+            target="_blank"
+            rel="noopener noreferrer"
           >
-
-            <span>
-              ↓
-            </span>
-
-            Download Resume
-
+            <span>↓</span>
+            View Resume
           </a>
 
         </div>
 
-
-        {/* ================= SOCIAL LINKS ================= */}
-
         <div className="social-links hero-animation-5">
 
           <a
-            href="YOUR_GITHUB_LINK"
+            href="https://github.com/Ayushverma077"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="social-icon"
           >
             GitHub
           </a>
 
-
           <a
-            href="YOUR_LINKEDIN_LINK"
+            href="https://www.linkedin.com/in/ayush-verma-27382a277/"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="social-icon"
           >
             LinkedIn
+          </a>
+
+          <a
+            href="mailto:ayushverma6010@gmail.com"
+            className="social-icon"
+          >
+            Email
           </a>
 
         </div>
@@ -159,16 +132,9 @@ function Hero() {
       </div>
 
 
-      {/* ================= RIGHT SIDE ================= */}
-
       <div className="hero-image-container">
 
-        {/* GREEN GLOW */}
-
         <div className="hero-glow"></div>
-
-
-        {/* PROFILE PHOTO */}
 
         <div className="hero-profile">
 

@@ -1,18 +1,6 @@
 
-import { useEffect, useState } from "react";
-import {
-  motion,
-  useReducedMotion,
-} from "motion/react";
-
+import { motion, useReducedMotion } from "motion/react";
 import profileImg from "../assets/profile.jpg";
-
-const roles = [
-  "Java Developer",
-  "AI/ML Enthusiast",
-  "Generative AI Developer",
-  "Problem Solver",
-];
 
 const socialLinks = [
   {
@@ -29,171 +17,156 @@ const socialLinks = [
   },
 ];
 
-function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [text, setText] = useState("");
-  const [deleting, setDeleting] = useState(false);
-
+export default function Hero() {
   const reduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (reduceMotion) return;
-
-    const currentRole = roles[roleIndex];
-
-    const timeout = setTimeout(() => {
-      if (!deleting) {
-        if (text.length < currentRole.length) {
-          setText(currentRole.slice(0, text.length + 1));
-        } else {
-          setDeleting(true);
-        }
-      } else {
-        if (text.length > 0) {
-          setText(currentRole.slice(0, text.length - 1));
-        } else {
-          setDeleting(false);
-          setRoleIndex((prev) => (prev + 1) % roles.length);
-        }
-      }
-    }, deleting ? 55 : text === currentRole ? 1400 : 90);
-
-    return () => clearTimeout(timeout);
-  }, [text, deleting, roleIndex, reduceMotion]);
-
-  const resumeUrl = `${import.meta.env.BASE_URL}resume.pdf`;
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
+  const entrance = {
+    hidden: { opacity: 0, y: 28 },
     visible: { opacity: 1, y: 0 },
   };
 
+  const resumeUrl = `${import.meta.env.BASE_URL}resume.pdf`;
+
   return (
-    <section id="home" className="hero premium-hero">
-      <motion.div
-        className="hero-content"
-        initial={reduceMotion ? false : "hidden"}
-        animate="visible"
-        transition={{ staggerChildren: 0.12 }}
-      >
-        <motion.p
-          variants={fadeUp}
-          transition={{ duration: 0.6 }}
-          className="intro"
-        >
-          Hello, I'm
-        </motion.p>
+    <section id="home" className="hero hero-v3">
+      <div className="hero-ambient hero-ambient-one" />
+      <div className="hero-ambient hero-ambient-two" />
 
-        <motion.h1
-          variants={fadeUp}
-          transition={{ duration: 0.7 }}
-        >
-          Ayush Kumar Verma
-        </motion.h1>
-
-        <motion.h2
-          variants={fadeUp}
-          transition={{ duration: 0.7 }}
-          className="premium-role"
-        >
-          I'm a{" "}
-          <span className="typing-text">
-            {reduceMotion ? roles[0] : text}
-          </span>
-          {!reduceMotion && (
-            <span className="cursor">|</span>
-          )}
-        </motion.h2>
-
-        <motion.p
-          variants={fadeUp}
-          transition={{ duration: 0.7 }}
-          className="hero-description"
-        >
-          MCA (AI & ML) student passionate about software
-          development, Generative AI and building intelligent
-          applications. Currently developing LeanAI, an LLM
-          context and token optimization system.
-        </motion.p>
-
+      <div className="hero-layout">
         <motion.div
-          variants={fadeUp}
-          transition={{ duration: 0.7 }}
-          className="hero-buttons"
+          className="hero-content"
+          initial={reduceMotion ? false : "hidden"}
+          animate="visible"
+          transition={{ staggerChildren: 0.13 }}
         >
-          <motion.a
-            href="#projects"
-            className="primary-btn premium-cta"
-            whileHover={reduceMotion ? undefined : { y: -3, scale: 1.03 }}
-            whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+          <motion.div
+            className="availability-pill"
+            variants={entrance}
           >
-            Explore Projects
-            <span aria-hidden="true">↗</span>
-          </motion.a>
+            <span className="availability-dot" />
+            Open to software engineering opportunities
+          </motion.div>
 
-          <motion.a
-            href={resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="secondary-btn premium-cta"
-            whileHover={reduceMotion ? undefined : { y: -3 }}
-            whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+          <motion.p
+            className="hero-kicker"
+            variants={entrance}
           >
-            View Resume
-            <span aria-hidden="true">↗</span>
-          </motion.a>
-        </motion.div>
+            HELLO WORLD, I'M AYUSH
+          </motion.p>
 
-        <motion.div
-          variants={fadeUp}
-          transition={{ duration: 0.7 }}
-          className="social-links premium-socials"
-        >
-          {socialLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.url}
-              target={link.name === "Email" ? undefined : "_blank"}
-              rel={link.name === "Email" ? undefined : "noopener noreferrer"}
-              className="social-icon premium-social-link"
+          <motion.h1 variants={entrance}>
+            Building software.
+            <span className="gradient-text">
+              {" "}Engineering intelligence.
+            </span>
+          </motion.h1>
+
+          <motion.p
+            className="hero-role"
+            variants={entrance}
+          >
+            Ayush Kumar Verma
+            <span className="role-divider"> / </span>
+            Java Developer & AI/ML Enthusiast
+          </motion.p>
+
+          <motion.p
+            className="hero-description"
+            variants={entrance}
+          >
+            MCA (AI & ML) student at UPES, passionate about
+            software engineering and intelligent applications.
+            Currently developing LeanAI and building AI-powered
+            experiences like Travillo AI.
+          </motion.p>
+
+          <motion.div
+            className="hero-buttons"
+            variants={entrance}
+          >
+            <motion.a
+              href="#projects"
+              className="primary-btn"
+              whileHover={reduceMotion ? undefined : { y: -3 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.97 }}
             >
-              {link.name}
-              <span aria-hidden="true">↗</span>
-            </a>
-          ))}
-        </motion.div>
-      </motion.div>
+              Explore My Work <span aria-hidden="true">↗</span>
+            </motion.a>
 
-      <motion.div
-        className="hero-image-container"
-        initial={reduceMotion ? false : { opacity: 0, scale: 0.88 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <div className="hero-glow" />
+            <motion.a
+              href={resumeUrl}
+              className="secondary-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={reduceMotion ? undefined : { y: -3 }}
+            >
+              View Resume <span aria-hidden="true">↗</span>
+            </motion.a>
+          </motion.div>
+
+          <motion.div
+            className="social-links"
+            variants={entrance}
+          >
+            {socialLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.url}
+                target={
+                  link.name === "Email" ? undefined : "_blank"
+                }
+                rel={
+                  link.name === "Email"
+                    ? undefined
+                    : "noopener noreferrer"
+                }
+              >
+                {link.name}
+                <span aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </motion.div>
+        </motion.div>
 
         <motion.div
-          className="hero-profile premium-profile"
-          animate={
+          className="hero-visual"
+          initial={
             reduceMotion
-              ? undefined
-              : { y: [0, -10, 0] }
+              ? false
+              : { opacity: 0, x: 35, scale: 0.95 }
           }
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 0.9 }}
         >
-          <img
-            src={profileImg}
-            alt="Ayush Kumar Verma"
-            className="profile-img"
-          />
+          <div className="visual-orbit" />
+
+          <div className="profile-frame">
+            <img
+              src={profileImg}
+              alt="Ayush Kumar Verma"
+              className="profile-img"
+            />
+
+            <div className="profile-overlay">
+              <span className="profile-status-dot" />
+              BUILDING WHAT'S NEXT
+            </div>
+          </div>
+
+          <div className="floating-tag tag-ai">
+            ✦ Generative AI
+          </div>
+
+          <div className="floating-tag tag-code">
+            {"{ }"} Software Engineer
+          </div>
         </motion.div>
-      </motion.div>
+      </div>
+
+      <div className="hero-bottom">
+        <span>SCROLL TO EXPLORE</span>
+        <span aria-hidden="true">↓</span>
+      </div>
     </section>
   );
 }
-
-export default Hero;

@@ -1,42 +1,32 @@
-import { useEffect, useRef, useState } from "react";
 
-function Reveal({ children }) {
-  const [visible, setVisible] = useState(false);
-  const elementRef = useRef(null);
+import { motion, useReducedMotion } from "motion/react";
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.15,
-      }
-    );
-
-    const currentElement = elementRef.current;
-
-    if (currentElement) {
-      observer.observe(currentElement);
-    }
-
-    return () => {
-      if (currentElement) {
-        observer.unobserve(currentElement);
-      }
-    };
-  }, []);
+function Reveal({ children, delay = 0 }) {
+  const reduceMotion = useReducedMotion();
 
   return (
-    <div
-      ref={elementRef}
-      className={`reveal ${visible ? "reveal-active" : ""}`}
+    <motion.div
+      initial={
+        reduceMotion
+          ? false
+          : { opacity: 0, y: 35 }
+      }
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+        amount: 0.1,
+      }}
+      transition={{
+        duration: 0.7,
+        delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
